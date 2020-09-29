@@ -1,0 +1,53 @@
+body {
+  background-color: black;
+}
+
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: thistle;
+}
+
+.grid {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  border-style: solid;
+  background-color: teal;
+}
+
+.grid div {
+  width: 40px;
+  height: 40px;
+}
+
+.snake {
+  background-color: green;
+  border-color: olive;
+}
+
+.apple {
+  background-color: purple;
+}
+
+.score {
+  color: aqua;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  font-size: 30px;
+  padding-top: 80px;
+}
+
+.start {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  text-align: center;
+  font-family: 
+  background-color: teal;
+  border-radious: 25px;
+}
