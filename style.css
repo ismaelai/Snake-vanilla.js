@@ -21,21 +21,30 @@ body {
   border-style: solid;
   background-image: url(https://wallpapercave.com/wp/wp2409705.jpg);
   background-size: contain;
-  background-image: ;
 }
 
 .grid div {
-  width: 40px;
-  height: 40px;
+  width: 39px;
+  height: 39px;
 }
 
 .snake {
   background-color: green;
   border-color: black;
+  border-style: solid;
+  border-radius: 8px;
 }
 
 .apple {
-  background-color: purple;
+  background-color: ;
+  background-image: url(https://media.giphy.com/media/l3q2vJAGnN2bCRduM/giphy.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 7px;
+  opacity: 0.8;
+  border-style: groove;
+  display: flex;
+  flex-direction: row;
 }
 
 .score-wrapper {
@@ -44,6 +53,8 @@ body {
   justify-content: center;
   background-color: yellowgreen;
   padding-left: 10px;
+  border-style: ridge;
+  border-width: thick;
 }
 
 .score {
@@ -58,12 +69,14 @@ body {
 }
 
 .start {
-  display: flex;
+  margin: ;
   justify-content: center;
-  flex-direction: row;
-  font-size: 30px;
-  text-align: center;
-  text-shadow: yellow;
+  background-size: cover;
+  margin-right: 100px;
+  border-style: ridge;
+  border-width: thick;
+  border-radius: 3px;
+  background-color: ;
 }
 
 .dead {
