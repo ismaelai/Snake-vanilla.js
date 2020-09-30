@@ -1,13 +1,13 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const grid =
+  const grid = document.querySelector('.grid');
   const width = 10;
   const height = width;
-  const squares = width * height;
+  const gridDimensions = width * height;
   const cells = [];
 
-  for (let index = 0; index < squares; index = index + 1) {
-    const cell = document.createElement('grid');
-    squares.appendChild(cell);
+  for (let index = 0; index < gridDimensions; index = index + 1) {
+    const cell = document.createElement('div');
+    grid.appendChild(cell);
     cells.push(cell);
   }
 
@@ -85,14 +85,12 @@ window.addEventListener('DOMContentLoaded', () => {
     clearInterval(interval);
     intervalTime = intervalTime * speed;
     interval = setInterval(overcomes, intervalTime);
+    squares[bodySnake[0]].classList.add('snake');
   }
-  squares[bodySnake[0]].classList.add('snake');
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Generar apples al azar
-
-)
   function randomApple() {
     do {
       appleIndex = Math.floor(Math.random() * squares.length);
@@ -141,8 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
       grid.classList.add('dead');
     }
     console.log('gameOver');
-
-    document.addEventListener('keyup', control);
-    startBtn.addEventListener('click', startGame);
   }
+  document.addEventListener('keyup', control);
+  startBtn.addEventListener('click', startGame);
 });
