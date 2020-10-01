@@ -6,6 +6,13 @@ body {
   background-color: yellowgreen;
 }
 
+h1 {
+  display: flex;
+  margin-left: 10px;
+  justify-content: left;
+  
+}
+
 .grid-wrapper {
   display: flex;
   justify-content: center;
@@ -21,11 +28,12 @@ body {
   border-style: solid;
   background-image: url(https://wallpapercave.com/wp/wp2409705.jpg);
   background-size: contain;
+  justify-items: center;
 }
 
 .grid div {
-  width: 39px;
-  height: 39px;
+  width: 39.5px;
+  height: 39.5px;
 }
 
 .snake {
@@ -36,47 +44,67 @@ body {
 }
 
 .apple {
-  background-color: ;
   background-image: url(https://media.giphy.com/media/l3q2vJAGnN2bCRduM/giphy.gif);
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 7px;
+  border-radius: 17px;
   opacity: 0.8;
   border-style: groove;
+  border-color: blueviolet;
   display: flex;
   flex-direction: row;
 }
 
 .score-wrapper {
+  font-style: italic;
+  font-weight: bold;
   display: flex;
   align-content: center;
-  justify-content: center;
   background-color: yellowgreen;
   padding-left: 10px;
   border-style: ridge;
   border-width: thick;
 }
 
+.container-score {
+  display: flexbox;
+  width: 120px;
+  height: 80px;
+  justify-content: center;
+  justify-content: center;
+  background-color:yellowgreen;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-style: solid;
+  border-width:3px;
+  box-shadow: 10px black;
+}
+
 .score {
   color: black;
   display: flex;
-  flex-direction: row;
+  flex-direction: row
   align-content: center;
   justify-content: center;
-  font-size: 30px;
-  padding-top: 40px;
+  font-size: 20px;
   border-radius: 20px;
 }
 
 .start {
-  margin: ;
+  
   justify-content: center;
   background-size: cover;
-  margin-right: 100px;
   border-style: ridge;
   border-width: thick;
-  border-radius: 3px;
-  background-color: ;
+  border-radius: 10px;
+  background-color: darkgrey;
+}
+
+.start-wrapper {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  background-image: url(https://stanprucha.com/wp-content/uploads/2018/12/Red-Brick-Wall-Background-DSC03224-27-07-18.jpg);
 }
 
 .dead {
@@ -86,4 +114,11 @@ body {
   flex-wrap: wrap;
   border-style: solid;
   background-image: url(https://image.winudf.com/v2/image/Y29tLnh0cl9zY3JlZW5fM19mMnU5b2k5Yg/screen-3.jpg?fakeurl=1&type=.jpg);
+}
+
+footer{
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-color: black;
 }

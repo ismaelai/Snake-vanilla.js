@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   for (let index = 0; index < gridDimensions; index = index + 1) {
     const cell = document.createElement('div');
+
     grid.appendChild(cell);
     cells.push(cell);
   }
@@ -37,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
     randomApple();
     direction = 1;
     scoreDisplay.innerText = score;
-    intervalTime = 700;
+    intervalTime = 1000;
     bodySnake = [2, 1, 0];
     currentIndex = 0;
 
@@ -80,7 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
     squares[tail].classList.add('snake');
     bodySnake.push(tail);
     randomApple();
-    score++;
+    score = +1;
     scoreDisplay.textContent = score;
     clearInterval(interval);
     intervalTime = intervalTime * speed;
@@ -132,7 +133,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // }
 
   function gameOver() {
-    if (squares[bodySnake[0]].classList.remove('snake')) {
+    if (clearInterval()) {
+      startGame();
       clearInterval();
       overcomes();
       grid.classList.remove('.grid');
