@@ -5,86 +5,94 @@ const grid = document.querySelector('.grid');
 const cells = [];
 for (let index = 0; index < cellCount; index = index + 1) {
   const cell = document.createElement('div');
-  cell.innerText = index;
+  //cell.innerText = index;
   grid.appendChild(cell);
   cells.push(cell);
 }
-////////////////////////////////////NOKIA////////////////////////s
+////////////////////////////////////////////////////////////s
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const scoreDisplay = document.querySelector('span');
   const startBtn = document.querySelector('.start');
-  const width = 10;
-  let currentIndex = 0; //so first div in our grid
-  let appleIndex = 0; //so first div in our grid
-  let currentSnake = [2, 1, 0];
+  //const width = 10;
+  let currentIndex = 0;
+  let appleIndex = 0;
+  let bodySnake = [2, 1, 0]; // los indices de snake.
   let direction = 1;
   let score = 0;
   let speed = 0.9;
   let intervalTime = 0;
   let interval = 0;
-  //to start, and restart the game
+
+  // Al clickar el boton de Play
+
   function startGame() {
-    currentSnake.forEach((index) => squares[index].classList.remove('snake'));
+    bodySnake.forEach((index) => squares[index].classList.remove('snake'));
     squares[appleIndex].classList.remove('apple');
     clearInterval(interval);
     score = 0;
     randomApple();
     direction = 1;
     scoreDisplay.innerText = score;
-    intervalTime = 1000;
-    currentSnake = [2, 1, 0];
+    intervalTime = 800;
+    bodySnake = [2, 1, 0];
     currentIndex = 0;
-    currentSnake.forEach((index) => squares[index].classList.add('snake'));
-    interval = setInterval(moveOutcomes, intervalTime);
+    bodySnake.forEach((index) => squares[index].classList.add('snake'));
+    interval = setInterval(overcomes, intervalTime);
   }
-  //function that deals with ALL the ove outcomes of the Snake
-  function moveOutcomes() {
-    //deals with snake hitting border and snake hitting self
+
+  function overcomes() {
+    // colisiones con la pared
     if (
-      (currentSnake[0] + width >= width * width && direction === width) || //if snake hits bottom
-      (currentSnake[0] % width === width - 1 && direction === 1) || //if snake hits right wall
-      (currentSnake[0] % width === 0 && direction === -1) || //if snake hits left wall
-      (currentSnake[0] - width < 0 && direction === -width) || //if snake hits the top
-      squares[currentSnake[0] + direction].classList.contains('snake') //if snake goes into itself
+      (bodySnake[0] + width >= width * width && direction === width) || // Pared inferior.
+      (bodySnake[0] % width === width - 1 && direction === 1) || //Pared derecha.
+      (bodySnake[0] % width === 0 && direction === -1) || //Pared izquierda.
+      (bodySnake[0] - width < 0 && direction === -width) || //pared superior
+      squares[bodySnake[0] + direction].classList.contains('snake') //chocar nosotros mismos.
     ) {
-      return clearInterval(interval); //this will clear the interval if any of the above happen
+      return clearInterval(interval); //Si algo de lo anterior sucede. Se acaba el intervalo.
     }
-    const tail = currentSnake.pop(); //removes last ite of the array and shows it
-    squares[tail].classList.remove('snake'); //removes class of snake from the TAIL
-    currentSnake.unshift(currentSnake[0] + direction); //gives direction to the head of the array
-    //deals with snake getting apple
-    if (squares[currentSnake[0]].classList.contains('apple')) {
-      squares[currentSnake[0]].classList.remove('apple');
+    const tail = bodySnake.pop(); // Quita la ultima posicion del array snake.
+    squares[tail].classList.remove('snake'); //Quita clase de snake de la cola.
+    bodySnake.unshift(bodySnake[0] + direction); // Da direccion a la cabeza del array.
+
+    // Comer manzanas.
+    // Crecer
+    // sumar score
+    // aumentamos la velocidad de snake
+
+    if (squares[bodySnake[0]].classList.contains('apple')) {
+      squares[bodySnake[0]].classList.remove('apple');
       squares[tail].classList.add('snake');
-      currentSnake.push(tail);
+      bodySnake.push(tail);
       randomApple();
       score++;
       scoreDisplay.textContent = score;
       clearInterval(interval);
       intervalTime = intervalTime * speed;
-      interval = setInterval(moveOutcomes, intervalTime);
+      interval = setInterval(overcomes, intervalTime);
     }
-    squares[currentSnake[0]].classList.add('snake');
+    squares[bodySnake[0]].classList.add('snake');
   }
-  //generate new apple once apple is eaten
+
+  //Generar manzanas al azar.
   function randomApple() {
     do {
       appleIndex = Math.floor(Math.random() * squares.length);
-    } while (squares[appleIndex].classList.contains('snake')); //making sure apples dont appear on the snake
+    } while (squares[appleIndex].classList.contains('snake')); // Las manzanas no aparecen encima clase snake.
     squares[appleIndex].classList.add('apple');
   }
-  //assign functions to keycodes
+  //Asignar funciones a los keycodes de Arrowkeys para mover snake en el grid.
   function control(e) {
     squares[currentIndex].classList.remove('snake');
     if (e.keyCode === 39) {
-      direction = 1; //if we press the right arrow on our keyboard, the snake will go right one
+      direction = 1; // Ir hacia la derecha.
     } else if (e.keyCode === 38) {
-      direction = -width; // if we press the up arrow, the snake will go back ten divs, appearing to go up
+      direction = -width; // Ir hacia arriba.
     } else if (e.keyCode === 37) {
-      direction = -1; // if we press left, the snake will go left one div
+      direction = -1; // Ir hacia izquierda.
     } else if (e.keyCode === 40) {
-      direction = +width; //if we press down, the snake head will instantly appear in the div ten divs from where you are now
+      direction = +width; //Ir hacia abajo.
     }
   }
   document.addEventListener('keyup', control);
