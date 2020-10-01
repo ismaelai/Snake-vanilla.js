@@ -1,37 +1,31 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const grid = document.querySelector('.grid');
-  const width = 10;
-  const height = width;
-  const gridDimensions = width * height;
-  const cells = [];
-
-  for (let index = 0; index < gridDimensions; index = index + 1) {
-    const cell = document.createElement('div');
-
-    grid.appendChild(cell);
-    cells.push(cell);
-  }
-
+const width = 10;
+const height = width;
+const cellCount = width * height;
+const grid = document.querySelector('.grid');
+const cells = [];
+for (let index = 0; index < cellCount; index = index + 1) {
+  const cell = document.createElement('div');
+  cell.innerText = index;
+  grid.appendChild(cell);
+  cells.push(cell);
+}
+////////////////////////////////////NOKIA////////////////////////s
+document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const scoreDisplay = document.querySelector('span');
   const startBtn = document.querySelector('.start');
-
-  //////////////////////////////////////////////////////////////////////////////////
-
-  let currentIndex = 0;
-  let appleIndex = 0;
-  let bodySnake = [2, 1, 0]; /// 2 es la cabeza, 1 cuerpo y 0 tail (todo lo que proceda hay es 1)
+  const width = 10;
+  let currentIndex = 0; //so first div in our grid
+  let appleIndex = 0; //so first div in our grid
+  let currentSnake = [2, 1, 0];
   let direction = 1;
   let score = 0;
   let speed = 0.9;
   let intervalTime = 0;
   let interval = 0;
-
-  //Empezar y re-start el juego
-
+  //to start, and restart the game
   function startGame() {
-    bodySnake.forEach((index) => squares[index].classList.remove('snake'));
-    bodySnake.forEach((index) => squares[index].classList.add('snake'));
+    currentSnake.forEach((index) => squares[index].classList.remove('snake'));
     squares[appleIndex].classList.remove('apple');
     clearInterval(interval);
     score = 0;
@@ -39,108 +33,59 @@ window.addEventListener('DOMContentLoaded', () => {
     direction = 1;
     scoreDisplay.innerText = score;
     intervalTime = 1000;
-    bodySnake = [2, 1, 0];
+    currentSnake = [2, 1, 0];
     currentIndex = 0;
-
-    interval = setInterval(overcomes, intervalTime);
-    console.log(interval);
+    currentSnake.forEach((index) => squares[index].classList.add('snake'));
+    interval = setInterval(moveOutcomes, intervalTime);
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-
-  function overcomes() {
+  //function that deals with ALL the ove outcomes of the Snake
+  function moveOutcomes() {
+    //deals with snake hitting border and snake hitting self
     if (
-      (bodySnake[0] + width >= width * width && direction === width) || //Chocamos con el bottom
-      (bodySnake[0] % width === width - 1 && direction === 1) || //chocar muro derecho
-      (bodySnake[0] % width === 0 && direction === -1) || //chocar muro izquiero
-      (bodySnake[0] - width < 0 && direction === -width) || //chocar con el top
-      squares[bodySnake[0] + direction].classList.contains('snake') // chocarnos nosotros mismos
+      (currentSnake[0] + width >= width * width && direction === width) || //if snake hits bottom
+      (currentSnake[0] % width === width - 1 && direction === 1) || //if snake hits right wall
+      (currentSnake[0] % width === 0 && direction === -1) || //if snake hits left wall
+      (currentSnake[0] - width < 0 && direction === -width) || //if snake hits the top
+      squares[currentSnake[0] + direction].classList.contains('snake') //if snake goes into itself
     ) {
-      return clearInterval(interval); // Si cualquiera de lo anterior sucede. Se para el intervalo.
+      return clearInterval(interval); //this will clear the interval if any of the above happen
     }
+    const tail = currentSnake.pop(); //removes last ite of the array and shows it
+    squares[tail].classList.remove('snake'); //removes class of snake from the TAIL
+    currentSnake.unshift(currentSnake[0] + direction); //gives direction to the head of the array
+    //deals with snake getting apple
+    if (squares[currentSnake[0]].classList.contains('apple')) {
+      squares[currentSnake[0]].classList.remove('apple');
+      squares[tail].classList.add('snake');
+      currentSnake.push(tail);
+      randomApple();
+      score++;
+      scoreDisplay.textContent = score;
+      clearInterval(interval);
+      intervalTime = intervalTime * speed;
+      interval = setInterval(moveOutcomes, intervalTime);
+    }
+    squares[currentSnake[0]].classList.add('snake');
   }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // Eliminamos el ultimo item del array bodySnake, y la clase de 'snake' en TAIL.
-  // Asi damos una nueva direccion con la cabeza del array.
-
-  const tail = bodySnake.pop();
-  squares[tail].classList.remove('snake');
-  bodySnake.unshift(bodySnake[0] + direction);
-
-  // Se va apple, cuando pasamos por la clase que la contenga, Y generamos una nueva apple.
-  // Añadir clase snake a tail cuando consigamos manzanas.Por tanto,BodySnake crece.
-  // Sumamos score
-  // Clear interval y aumentamos la velocidad de snake. Y volvemos a iniciar Interval.
-  //
-
-  if (squares[bodySnake[0]].classList.contains('apple')) {
-    squares[bodySnake[0]].classList.remove('apple');
-    squares[tail].classList.add('snake');
-    bodySnake.push(tail);
-    randomApple();
-    score = +1;
-    scoreDisplay.textContent = score;
-    clearInterval(interval);
-    intervalTime = intervalTime * speed;
-    interval = setInterval(overcomes, intervalTime);
-    squares[bodySnake[0]].classList.add('snake');
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //Generar apples al azar
+  //generate new apple once apple is eaten
   function randomApple() {
     do {
       appleIndex = Math.floor(Math.random() * squares.length);
-    } while (squares[appleIndex].classList.contains('snake')); // Apple no aparece encima de snake
+    } while (squares[appleIndex].classList.contains('snake')); //making sure apples dont appear on the snake
     squares[appleIndex].classList.add('apple');
   }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-
+  //assign functions to keycodes
   function control(e) {
     squares[currentIndex].classList.remove('snake');
-
     if (e.keyCode === 39) {
-      direction = 1; // ir a la derecha
+      direction = 1; //if we press the right arrow on our keyboard, the snake will go right one
     } else if (e.keyCode === 38) {
-      direction = -width; // ir arriba
+      direction = -width; // if we press the up arrow, the snake will go back ten divs, appearing to go up
     } else if (e.keyCode === 37) {
-      direction = -1; // ir izquiera
+      direction = -1; // if we press left, the snake will go left one div
     } else if (e.keyCode === 40) {
-      direction = +width; // ir hacia abajo
+      direction = +width; //if we press down, the snake head will instantly appear in the div ten divs from where you are now
     }
-  }
-
-  // function control(e) {
-  //   squares[currentIndex].classList.remove('snake');
-  //   switch (e.keyCode) {
-  //     case 37:
-  //       if (direction === -1) direction = 'left';
-  //       break;
-  //     case 38:
-  //       if (direction === -width) direction = 'up';
-  //       break;
-  //     case 39:
-  //       if (direction === 1) direction = 'right';
-  //       break;
-  //     case 40:
-  //       if (direction === +width) direction = 'down';
-  //       break;
-  // }
-
-  function gameOver() {
-    if (clearInterval()) {
-      startGame();
-      clearInterval();
-      overcomes();
-      grid.classList.remove('.grid');
-      grid.classList.add('dead');
-    }
-    console.log('gameOver');
   }
   document.addEventListener('keyup', control);
   startBtn.addEventListener('click', startGame);
