@@ -1,4 +1,4 @@
-# The Game
+# Snake Game
 
 
 ## What is it?
@@ -23,11 +23,13 @@ This is my classic snake game built in a class project. It took me up to 8 days 
 
 Use your cursor keys to move snake: up, left, right, and down.
 You will need to click the play button to restart.
+Watch our your own tail and walls. 
+Eat as much apples as possible to increase your tail and add up score.
 
 ## Documentation
 
 -MDN
--W3school
+-W3schools
 -Youtube
 
 
