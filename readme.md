@@ -17,8 +17,7 @@ This is my classic snake game built in a class project. It took me up to 8 days 
 -Clone or download the repository
 -Open the index.html in your browser.
 
-(CLICK THIS LINK)
-
+(CLICK THIS LINK) https://ismaelai.github.io/the-game/
 ## How to Play
 
 Use your cursor keys to move snake: up, left, right, and down.
