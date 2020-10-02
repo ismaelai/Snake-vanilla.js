@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       (bodySnake[0] - width < 0 && direction === -width) || //pared superior
       squares[bodySnake[0] + direction].classList.contains('snake') //chocar nosotros mismos.
     ) {
+      alert('YOU LOSE! ' + '! Your Score is ' + score + ' Try again player! ');
       return clearInterval(interval); //Si algo de lo anterior sucede. Se acaba el intervalo.
     }
     const tail = bodySnake.pop(); // Quita la ultima posicion del array snake.
